@@ -1,9 +1,9 @@
-import { Button } from "./components/ui/button";
+import Todo from "./pages/Todo";
 
 const App = () => {
   return (
-    <div className="m-12">
-      <Button>My button</Button>
+    <div className="">
+      <Todo />
     </div>
   );
 };
