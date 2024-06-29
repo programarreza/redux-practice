@@ -10,9 +10,9 @@ import {
 import { addTodo } from "@/redux/features/todoSlice";
 import { useAppDispatch } from "@/redux/hook";
 import { FormEvent, useState } from "react";
-import { Button } from "../button";
-import { Input } from "../input";
-import { Label } from "../label";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 
 const AddTodoModal = () => {
   const [task, setTask] = useState("");
