@@ -1,6 +1,6 @@
 import { useAppDispatch } from "@/redux/hook";
 import { Button } from "../ui/button";
-import { removeTodo } from "@/redux/features/todoSlice";
+import { removeTodo, toggleTodo } from "@/redux/features/todoSlice";
 
 type TTodoCardProps = {
   id: string;
@@ -13,7 +13,7 @@ const TodoCard = ({ title, description, id, isCompleted }: TTodoCardProps) => {
   const dispatch = useAppDispatch();
 
   const toggleState = () => {
-    console.log("Toggle");
+    dispatch(toggleTodo(id));
   };
 
   return (
@@ -27,11 +27,11 @@ const TodoCard = ({ title, description, id, isCompleted }: TTodoCardProps) => {
       <p className="font-semibold">{title}</p>
       {/* <p>Time</p> */}
       <div>
-        {isCompleted ? (
-          <p className="text-green-500">Done</p>
-        ) : (
+        {isCompleted === "finished" ? (
+          <p className="text-green-500">Finished</p>
+        ) : isCompleted === "pending" ? (
           <p className="text-red-500">Pending</p>
-        )}
+        ) : null}
       </div>
       <p>{description}</p>
       <div className="space-x-5">
