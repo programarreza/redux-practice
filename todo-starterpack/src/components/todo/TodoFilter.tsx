@@ -29,6 +29,7 @@ const TodoFilter = () => {
           value={filter}
           onValueChange={(value) => dispatch(setFilter(value))}
         >
+          <DropdownMenuRadioItem value="">All</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="high">High</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="medium">Medium</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="low">Low</DropdownMenuRadioItem>
