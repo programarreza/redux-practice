@@ -1,17 +1,21 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-type TTodo = {
+
+export type TTodo = {
   id: string;
   title: string;
   description: string;
+  priority: "high" | "medium" | "low";
   isCompleted?: string;
 };
 
 type TInitialState = {
   todos: TTodo[];
+  filter: string;
 };
 
 const initialState: TInitialState = {
   todos: [],
+  filter: "",
 };
 
 export const todoSlice = createSlice({
@@ -31,9 +35,18 @@ export const todoSlice = createSlice({
           todo.isCompleted === "finished" ? "pending" : "finished";
       }
     },
+    setFilter: (state, action: PayloadAction<string>) => {
+      state.filter = action.payload;
+    },
   },
 });
 
-export const { addTodo, removeTodo, toggleTodo } = todoSlice.actions;
+// selector for filtered todos
+export const selectedTodos = (state: { todos: TInitialState }) => {
+  const { todos, filter } = state.todos;
+  return filter ? todos.filter((todo) => todo.priority === filter) : todos;
+};
+
+export const { addTodo, removeTodo, toggleTodo, setFilter } = todoSlice.actions;
 
 export default todoSlice.reducer;

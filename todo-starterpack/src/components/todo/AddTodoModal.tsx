@@ -12,11 +12,21 @@ import {
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { useAppDispatch } from "@/redux/hook";
-import { addTodo } from "@/redux/features/todoSlice";
+import { TTodo, addTodo } from "@/redux/features/todoSlice";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 
 const AddTodoModal = () => {
   const [task, setTask] = useState("");
   const [description, setDescription] = useState("");
+  const [priority, setPriority] = useState("medium");
   const dispatch = useAppDispatch();
 
   const onSubmit = (e: FormEvent) => {
@@ -24,10 +34,11 @@ const AddTodoModal = () => {
 
     const randomString = Math.random().toString(36).substring(2, 7);
 
-    const taskDetails = {
+    const taskDetails: TTodo = {
       id: randomString,
       title: task,
       description: description,
+      priority: priority as "high" | "medium" | "low",
     };
 
     console.log(taskDetails);
@@ -71,6 +82,46 @@ const AddTodoModal = () => {
                 className="col-span-3"
               />
             </div>
+
+            {/* priority */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button className="bg-primary-gradient ml-24  flex justify-end">
+                  <span className=" mr-14">Select priority</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="size-6"
+                    // class="size-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5"
+                    />
+                  </svg>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56">
+                <DropdownMenuLabel>Filter by priority</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuRadioGroup
+                  value={priority}
+                  onValueChange={setPriority}
+                >
+                  <DropdownMenuRadioItem value="high">
+                    High
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="medium">
+                    Medium
+                  </DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="low">Low</DropdownMenuRadioItem>
+                </DropdownMenuRadioGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
           <div className="flex justify-end">
             <DialogClose asChild>
