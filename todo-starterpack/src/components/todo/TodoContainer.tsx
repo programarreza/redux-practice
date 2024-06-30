@@ -1,10 +1,13 @@
-import { useState } from 'react';
-import AddTodoModal from './AddTodoModal';
-import TodoCard from './TodoCard';
-import TodoFilter from './TodoFilter';
+import { useAppSelector } from "@/redux/hook";
+import AddTodoModal from "./AddTodoModal";
+import TodoCard from "./TodoCard";
+import TodoFilter from "./TodoFilter";
 
 const TodoContainer = () => {
-  const [todos, setTodos] = useState({ data: [] });
+  // from local state
+  const { todos } = useAppSelector((state) => state.todos);
+
+  console.log({ todos });
 
   return (
     <div>
@@ -14,7 +17,7 @@ const TodoContainer = () => {
       </div>
       <div className="bg-primary-gradient w-full h-full rounded-xl  p-[5px]">
         <div className="bg-white p-5 w-full h-full rounded-lg space-y-3">
-          {todos?.data?.map((item) => (
+          {todos?.map((item) => (
             <TodoCard {...item} />
           ))}
         </div>
