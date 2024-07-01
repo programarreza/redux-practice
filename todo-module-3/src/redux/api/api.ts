@@ -22,7 +22,6 @@ export const baseApi = createApi({
 
     deleteTodo: builder.mutation({
       query: (id) => {
-        console.log("Inside base api", id);
         return { url: `/task/${id}`, method: "DELETE" };
       },
       invalidatesTags: ["todo"], // invalided to todo catch
@@ -30,4 +29,5 @@ export const baseApi = createApi({
   }),
 });
 
-export const { useGetTodosQuery, useAddTodoMutation, useDeleteTodoMutation } = baseApi;
+export const { useGetTodosQuery, useAddTodoMutation, useDeleteTodoMutation } =
+  baseApi;

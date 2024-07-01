@@ -2,6 +2,7 @@ import { useGetTodosQuery } from "@/redux/api/api";
 import AddTodoModal from "./AddTodoModal";
 import TodoCard from "./TodoCard";
 import TodoFilter from "./TodoFilter";
+import { TTodo } from "@/redux/features/todoSlice";
 
 const TodoContainer = () => {
   // from Local State
@@ -24,8 +25,10 @@ const TodoContainer = () => {
 
       <div className="bg-primary-gradient w-full h-full rounded-xl p-[5px] ">
         <div className="bg-white p-5 w-full h-full rounded-lg space-y-3 ">
-          {todos?.data?.map((item) => (
-            <TodoCard {...item} />
+          {todos?.data?.map((item: TTodo, index: number) => (
+            <div key={index}>
+              <TodoCard {...item} />
+            </div>
           ))}
         </div>
 
