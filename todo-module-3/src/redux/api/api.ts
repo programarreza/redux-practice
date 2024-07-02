@@ -6,10 +6,20 @@ export const baseApi = createApi({
   tagTypes: ["todo"],
   endpoints: (builder) => ({
     getTodos: builder.query({
-      query: (priority) => ({
-        url: `/tasks?priority=${priority}`,
-        method: "GET",
-      }),
+      query: (priority) => {
+        const params = new URLSearchParams();
+
+        if (priority) {
+          params.append("priority", priority);
+        }
+        return {
+          // url: `/tasks?priority=${priority}`, filter system-1
+          url: `/tasks`,
+          method: "GET",
+          params: params, // filter system-3
+          // params: { priority },  filter system-2
+        };
+      },
       providesTags: ["todo"], // set to catch name
     }),
     addTodo: builder.mutation({
@@ -26,8 +36,24 @@ export const baseApi = createApi({
       },
       invalidatesTags: ["todo"], // invalided to todo catch
     }),
+
+    updateTodo: builder.mutation({
+      query: (options) => {
+        console.log("Inside base api", options);
+        return {
+          url: `/task/${options.id}`,
+          method: "PUT",
+          body: options.data,
+        };
+      },
+      invalidatesTags: ["todo"], // invalided to todo catch
+    }),
   }),
 });
 
-export const { useGetTodosQuery, useAddTodoMutation, useDeleteTodoMutation } =
-  baseApi;
+export const {
+  useGetTodosQuery,
+  useAddTodoMutation,
+  useDeleteTodoMutation,
+  useUpdateTodoMutation,
+} = baseApi;

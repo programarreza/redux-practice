@@ -1,4 +1,4 @@
-import { useDeleteTodoMutation } from "@/redux/api/api";
+import { useDeleteTodoMutation, useUpdateTodoMutation } from "@/redux/api/api";
 import { Button } from "../ui/button";
 
 type TTodoCardProps = {
@@ -18,9 +18,26 @@ const TodoCard = ({
 }: TTodoCardProps) => {
   // const dispatch = useAppDispatch();
 
-  // const toggleState = () => {
-  //   dispatch(toggleComplete(id));
-  // };
+  const [updateTodo, { isLoading }] = useUpdateTodoMutation();
+
+  const toggleState = () => {
+    // dispatch(toggleComplete(id));
+    const taskData = {
+      title,
+      description,
+      priority,
+      isCompleted: !isCompleted,
+    };
+
+    const options = {
+      id: _id,
+      data: taskData,
+    };
+
+    updateTodo(options);
+    console.log(options, isLoading);
+  };
+
   const [deleteTodo] = useDeleteTodoMutation();
 
   const handleDelete = (id: string) => {
@@ -32,10 +49,11 @@ const TodoCard = ({
     <div className="bg-white rounded-md flex justify-between items-center p-3 border">
       <input
         className="mr-3"
-        // onChange={toggleState}
+        onChange={toggleState}
         type="checkbox"
         name="complete"
         id="complete"
+        defaultChecked={isCompleted}
       />
       <p className="font-semibold flex-1">{title}</p>
       <div className="flex-1 flex items-center gap-2 ">
